@@ -1,16 +1,21 @@
 import React, { useState } from "react";
-import { IContact } from "./Models";
+import { IContact, IFormData } from "./Models";
 import { images } from "./images";
 import "./DisplayDetails.css"
 import { ContactServices } from "./ContactServices";
 let contactServices:ContactServices=new ContactServices();
-export function DisplayDetails({contact}:{contact:IContact}, {showDetails}:{showDetails:Function}){  
+export function DisplayDetails({contact,setStatesObj, statesObj}:{contact:IContact,setStatesObj:Function,statesObj:any}){  
+function editHandler(){
+    let varForm:IFormData;
+    // varForm={...statesObj.selectedContact,action="edit"}
+setStatesObj({...statesObj,showForm:true,showDisplayDetails:false})
+}
         return(            
         <div className="displayDetails">
         <div>
           <span id="nameOfContact">{contact.name}</span>
           <img id="editimage" src={images.editIcon} />
-          <a className="viewbtns" id="editlink">Edit</a>
+          <a className="viewbtns" id="editlink" onClick={editHandler}>Edit</a>
           <img id="deleteimage" src={images.deleteIcon} />
           <a className="viewbtns" id="deletelink">Delete</a>
            </div>

@@ -5,7 +5,7 @@ import { contactList } from "./Data";
 import './FormSection.css'
 import { ContactServices } from "./ContactServices";
 let contactServices:ContactServices=new ContactServices();
-export function FormSection({id,statesObj,setStatesObj}:{id:string,statesObj:any,setStatesObj:any}){
+export function FormSection({id,statesObj,setStatesObj}:{id:string,statesObj:any,setStatesObj:Function}){
 let tempContact:IContact;
 tempContact=contactServices.getContactById(id);
   function handleChange(e: any) {

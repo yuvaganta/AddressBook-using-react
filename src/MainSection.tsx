@@ -10,7 +10,7 @@ export function MainSection({statesObj,displayDetailsState,setStatesObj}:{states
       return(
         <div className='MainSection'>
            <ContactsSection displayDetailsState={displayDetailsState} selectedContact={statesObj.selectedContact}></ContactsSection> 
-           {statesObj.showDisplayDetails&&  <DisplayDetails contact={statesObj.selectedContact} ></DisplayDetails>}  
+           {statesObj.showDisplayDetails&&  <DisplayDetails contact={statesObj.selectedContact} statesObj={statesObj} setStatesObj={setStatesObj}></DisplayDetails>}  
           {statesObj.showForm && <FormSection id={statesObj.formData.id} statesObj={statesObj} setStatesObj={setStatesObj}></FormSection> }
         </div>)
 }
