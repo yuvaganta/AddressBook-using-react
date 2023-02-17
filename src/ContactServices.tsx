@@ -21,4 +21,7 @@ export class ContactServices{
         contact=this.getContactById(contactId);
         contactList[contactList.indexOf(contact)]=newContact;
     }   
+    DeleteContact(contactId:string){
+        contactList.splice(contactList.indexOf(this.getContactById(contactId)),1);
+    }
 }

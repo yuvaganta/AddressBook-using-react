@@ -18,3 +18,8 @@ export interface IFormData{
     website:string;
     landline:string;
 }
+export interface IValidates{
+    isNameValidate:boolean;
+    isEmailValidate:boolean;
+    isMobileValidate:boolean;
+}

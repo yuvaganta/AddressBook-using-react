@@ -6,10 +6,11 @@ import { DisplayMiniDetails } from './SetUp';
 import { IContact } from './Models';
 import { IFormData } from './Models';
 import { ContactServices } from './ContactServices';
+import { IValidates } from './Models';
 let contactServices:ContactServices=new ContactServices();
 
 function App() {
-  const [statesObj, setStatesObj]=useState<{formData:IFormData,showForm:boolean,showDisplayDetails:boolean,selectedContact:IContact}>({
+  const [statesObj, setStatesObj]=useState<{formData:IFormData,showForm:boolean,showDisplayDetails:boolean,selectedContact:IContact,validates:IValidates}>({
     formData:{
       action:"add",
       id:"",
@@ -26,7 +27,12 @@ function App() {
     mobile:"",
     address:"",
     website:"",
-    landline:""}
+    landline:""},
+    validates:{
+      isNameValidate:false,
+      isEmailValidate:false,
+      isMobileValidate:false
+    }
   });
   const showForm = ()=>{
     setStatesObj({...statesObj,showForm:true,showDisplayDetails:false});

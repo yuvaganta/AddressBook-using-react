@@ -8,7 +8,11 @@ export function DisplayDetails({contact,setStatesObj, statesObj}:{contact:IConta
 function editHandler(){
     let varForm:IFormData;
     varForm={...statesObj.selectedContact,action:"edit"}
-setStatesObj({...statesObj,formData:varForm,showForm:true,showDisplayDetails:false})
+    setStatesObj({...statesObj,formData:varForm,showForm:true,showDisplayDetails:false})
+}
+function deleteHandler(){
+contactServices.DeleteContact(statesObj.selectedContact.id)
+setStatesObj({...statesObj,showForm:false,showDisplayDetails:false})
 }
         return(            
         <div className="displayDetails">
@@ -17,7 +21,7 @@ setStatesObj({...statesObj,formData:varForm,showForm:true,showDisplayDetails:fal
           <img id="editimage" src={images.editIcon} />
           <a className="viewbtns" id="editlink" onClick={editHandler}>Edit</a>
           <img id="deleteimage" src={images.deleteIcon} />
-          <a className="viewbtns" id="deletelink">Delete</a>
+          <a className="viewbtns" id="deletelink" onClick={deleteHandler}>Delete</a>
            </div>
         <div className="details">
           <div>
