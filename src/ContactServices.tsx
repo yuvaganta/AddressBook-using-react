@@ -15,5 +15,10 @@ export class ContactServices{
             contact={id:"",name:"",email:"",mobile:"",landline:"",website:"",address:""}
         }
         return contact;
-    }    
+    } 
+    UpdateContact(contactId:string,newContact:IContact){
+        let contact:IContact;
+        contact=this.getContactById(contactId);
+        contactList[contactList.indexOf(contact)]=newContact;
+    }   
 }

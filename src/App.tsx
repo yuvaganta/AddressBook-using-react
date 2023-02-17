@@ -36,7 +36,7 @@ function App() {
   }
   return (
     <div className="App">
-      <HeaderComponent setShowForm={showForm} ></HeaderComponent>
+      <HeaderComponent statesObj={statesObj} setStatesObj={setStatesObj}></HeaderComponent>
       <MainSection statesObj={statesObj} displayDetailsState={displayDetailsState} setStatesObj={setStatesObj}></MainSection>   
     </div>
   );

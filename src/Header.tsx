@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import "./Header.css"
 import { images } from './images';
-export function HeaderComponent({setShowForm}:{setShowForm:Function}){
+import { IFormData } from './Models';
+export function HeaderComponent({statesObj,setStatesObj}:{statesObj:any,setStatesObj:Function}){
+  function setShowForm() {
+    let varForm:IFormData={...statesObj.formData,name:"",id:"",mobile:"",address:"",email:"",website:"",landline:"",action:"add"}
+    setStatesObj({...statesObj,formData:varForm,showForm:true,showDisplayDetails:false});
+  }
+
     return(
         <div><h1 className="heading">Address Book</h1>
         <nav>

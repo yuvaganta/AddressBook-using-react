@@ -13,17 +13,25 @@ tempContact=contactServices.getContactById(id);
     let formData=statesObj.formData;
     setStatesObj({...statesObj,formData:{...formData,[lableName]:e.target.value}});
   }
-  function submitHandler(e: any){
-    let newContact:IContact;
+  function cancelHandler(){
+    let varForm:IFormData={...statesObj.formData,name:"",id:"",mobile:"",address:"",email:"",website:"",landline:""}
+    setStatesObj({...statesObj,formData:varForm,showForm:false,showDisplayDetails:false});
+  }
+  function submitHandler(e:any){
+    if(statesObj.formData.action=="add"){
+      let newContact:IContact;
     newContact={id:Guid.create().toString(),name:statesObj.formData.name,email:statesObj.formData.email,mobile:statesObj.formData.mobile,address:statesObj.formData.address,website:statesObj.formData.website,landline:statesObj.formData.landline}
     contactServices.AddContact(newContact)
     let varForm:IFormData={...statesObj.formData,name:"",id:"",mobile:"",address:"",email:"",website:"",landline:""}
     setStatesObj({...statesObj,formData:varForm,showForm:false,showDisplayDetails:true,selectedContact:newContact});
-    // setStatesObj({...statesObj,formData:varForm});
-  }
-  function cancelHandler(){
-    let varForm:IFormData={...statesObj.formData,name:"",id:"",mobile:"",address:"",email:"",website:"",landline:""}
-    setStatesObj({...statesObj,formData:varForm,showForm:false,showDisplayDetails:false});
+    }
+    else{
+      let newContact:IContact;
+      newContact={id:statesObj.selectedContact.id,name:statesObj.formData.name,email:statesObj.formData.email,mobile:statesObj.formData.mobile,address:statesObj.formData.address,website:statesObj.formData.website,landline:statesObj.formData.landline}
+      contactServices.UpdateContact(newContact.id,newContact)
+      let varForm:IFormData={...statesObj.formData,name:"",id:"",mobile:"",address:"",email:"",website:"",landline:""}
+      setStatesObj({...statesObj,formData:varForm,showForm:false,showDisplayDetails:true,selectedContact:contactServices.getContactById(newContact.id)});
+    }
   }
 return(
     <div className="addingDetails">
@@ -59,8 +67,8 @@ return(
           <div>
     <textarea id="addAddress" name="address" value={statesObj.formData.address} onChange={handleChange}></textarea></div>
           <div className="buttondiv">
-           {statesObj.formData.action=="add" && <button className="formbutton" id="addButton" type="submit">Add</button>}
-           {statesObj.formData.action=="edit" && <button className="formbutton" id="editButton" type="submit">Edit</button>}
+           {statesObj.formData.action=="add" && <button className="formbutton" id="addButton" type="submit" >Add</button>}
+           {statesObj.formData.action=="edit" && <button className="formbutton" id="editButton" type="submit" >Edit</button>}
             <button id="cancelButton" onClick={cancelHandler}>Cancel</button>
           </div>
         </form>

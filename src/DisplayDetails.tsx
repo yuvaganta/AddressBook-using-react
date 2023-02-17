@@ -7,8 +7,8 @@ let contactServices:ContactServices=new ContactServices();
 export function DisplayDetails({contact,setStatesObj, statesObj}:{contact:IContact,setStatesObj:Function,statesObj:any}){  
 function editHandler(){
     let varForm:IFormData;
-    // varForm={...statesObj.selectedContact,action="edit"}
-setStatesObj({...statesObj,showForm:true,showDisplayDetails:false})
+    varForm={...statesObj.selectedContact,action:"edit"}
+setStatesObj({...statesObj,formData:varForm,showForm:true,showDisplayDetails:false})
 }
         return(            
         <div className="displayDetails">
