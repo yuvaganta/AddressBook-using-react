@@ -1,12 +1,12 @@
 import React, { Children } from 'react';
-import { DisplayMiniDetails } from './SetUp';
+import { DisplayMiniDetails } from './DisplayMiniDetails';
 import { contactList } from './Data';
-import { IContact } from './Models';
+import { IContact, IStatesObj } from './Models';
 import "./MainSection.css";
 import { DisplayDetails } from './DisplayDetails';
 import { ContactsSection } from './ContactsSection';
 import { FormSection } from './FormSection';
-export function MainSection({statesObj,displayDetailsState,setStatesObj}:{statesObj:any, displayDetailsState:Function,setStatesObj:any}){
+export function MainSection({statesObj,displayDetailsState,setStatesObj}:{statesObj:IStatesObj, displayDetailsState:Function,setStatesObj:any}){
       return(
         <div className='MainSection'>
            <ContactsSection displayDetailsState={displayDetailsState} selectedContact={statesObj.selectedContact}></ContactsSection> 

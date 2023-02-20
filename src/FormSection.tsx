@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import {Guid} from "guid-typescript";
-import { IContact, IFormData } from "./Models";
+import { IContact, IFormData, IStatesObj, IValidates } from "./Models";
 import { contactList } from "./Data";
 import './FormSection.css'
 import { ContactServices } from "./ContactServices";
 import { ValidateForm } from "./Validations";
 let validateForm:ValidateForm=new ValidateForm();
 let contactServices:ContactServices=new ContactServices();
-export function FormSection({id,statesObj,setStatesObj}:{id:string,statesObj:any,setStatesObj:Function}){
+export function FormSection({id,statesObj,setStatesObj}:{id:string,statesObj:IStatesObj,setStatesObj:Function}){
 let tempContact:IContact;
 tempContact=contactServices.getContactById(id);
+const [validates , setValidates]=useState<IValidates>({isNameValidate:false,
+  isEmailValidate:false,
+  isMobileValidate:false})
   function handleChange(e: any) {
     let lableName=e.target.name;
     let formData=statesObj.formData;
@@ -17,7 +20,12 @@ tempContact=contactServices.getContactById(id);
   }
   function cancelHandler(){
     let varForm:IFormData={...statesObj.formData,name:"",id:"",mobile:"",address:"",email:"",website:"",landline:""}
-    setStatesObj({...statesObj,formData:varForm,showForm:false,showDisplayDetails:false,validates:{isNameValidate:false,isEmailValidate:false,isMobileValidate:false}});
+    if(statesObj.formData.action=="add"){
+    setStatesObj({...statesObj,formData:varForm,showForm:false,showDisplayDetails:false,selectedContact:{...statesObj.selectedContact,id:""}});}
+    else{
+      setStatesObj({...statesObj,formData:varForm,showForm:false,showDisplayDetails:true});
+    }
+    setValidates({isNameValidate:false,isEmailValidate:false,isMobileValidate:false});
   }
   function submitHandler(e:any){
     e.preventDefault();
@@ -27,7 +35,6 @@ tempContact=contactServices.getContactById(id);
     isEmail=validateForm.ValidateEmail(statesObj.formData.email);
     isMobile=validateForm.ValidateMobile(statesObj.formData.mobile);
     if(!isEmail&&!isMobile&&!isName){
-      console.log('in the ')
     if(statesObj.formData.action=="add"){
       let newContact:IContact;
     newContact={id:Guid.create().toString(),name:statesObj.formData.name,email:statesObj.formData.email,mobile:statesObj.formData.mobile,address:statesObj.formData.address,website:statesObj.formData.website,landline:statesObj.formData.landline}
@@ -36,14 +43,20 @@ tempContact=contactServices.getContactById(id);
     setStatesObj({...statesObj,formData:varForm,showForm:false,showDisplayDetails:true,selectedContact:newContact});
     }
     else{
+      if ( window.confirm("Are you sure you want to edit " +statesObj.selectedContact.name +"'s details")){
       let newContact:IContact;
       newContact={id:statesObj.selectedContact.id,name:statesObj.formData.name,email:statesObj.formData.email,mobile:statesObj.formData.mobile,address:statesObj.formData.address,website:statesObj.formData.website,landline:statesObj.formData.landline}
       contactServices.UpdateContact(newContact.id,newContact)
       let varForm:IFormData={...statesObj.formData,name:"",id:"",mobile:"",address:"",email:"",website:"",landline:""}
       setStatesObj({...statesObj,formData:varForm,showForm:false,showDisplayDetails:true,selectedContact:contactServices.getContactById(newContact.id)});
-    }}
+    }
+    else {
+      setStatesObj({...statesObj,showForm:false,showDisplayDetails:true});
+    }
+  }
+  }
     else{
-      setStatesObj({...statesObj,validates:{...statesObj.validates,isNameValidate:isName,isEmailValidate:isEmail,isMobileValidate:isMobile}});
+      setValidates({isNameValidate:isName,isEmailValidate:isEmail,isMobileValidate:isMobile});
     }
   }
 return(
@@ -52,11 +65,11 @@ return(
           <div><label>Name</label><span className="star">*</span></div>
           <div>
     <input type="text" id="addName" className="inbox" name="name" value={statesObj.formData.name} onChange={handleChange}/></div>
-          { statesObj.validates.isNameValidate && <div className="warnings" id="nameWarning">Enter your name</div>}
+          { validates.isNameValidate && <div className="warnings" id="nameWarning">Enter your name</div>}
           <div><label>Email</label></div>
           <div>
     <input type="text" id="addEmail" className="inbox" name="email" value={statesObj.formData.email} onChange={handleChange}/></div>
-    { statesObj.validates.isEmailValidate && <div className="warnings" id="emailWarning"> Enter EmailId</div>}
+    { validates.isEmailValidate && <div className="warnings" id="emailWarning"> Enter Valid Email Id</div>}
           <div>
             <label id="mobilelabel">Mobile<span className="star">*</span></label
             ><label>LandLine</label>
@@ -71,7 +84,7 @@ return(
               onChange={handleChange}
             />
           </div>
-          { statesObj.validates.isMobileValidate && <div className="warnings" id="mobileWarning">Enter Mobile Number</div>}
+          { validates.isMobileValidate && <div className="warnings" id="mobileWarning">Enter Mobile Number</div>}
           <div><label>Website</label></div>
           <div>
     <input type="text" className="inbox" name="website" id="addWebsite" value={statesObj.formData.website} onChange={handleChange}/></div>

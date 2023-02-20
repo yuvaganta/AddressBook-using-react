@@ -23,3 +23,9 @@ export interface IValidates{
     isEmailValidate:boolean;
     isMobileValidate:boolean;
 }
+export interface IStatesObj{
+    formData:IFormData;
+    showForm:boolean;
+    showDisplayDetails:boolean;
+      selectedContact:IContact
+}

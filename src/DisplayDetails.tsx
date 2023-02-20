@@ -1,18 +1,22 @@
 import React, { useState } from "react";
-import { IContact, IFormData } from "./Models";
+import { IContact, IFormData, IStatesObj } from "./Models";
 import { images } from "./images";
 import "./DisplayDetails.css"
 import { ContactServices } from "./ContactServices";
 let contactServices:ContactServices=new ContactServices();
-export function DisplayDetails({contact,setStatesObj, statesObj}:{contact:IContact,setStatesObj:Function,statesObj:any}){  
+export function DisplayDetails({contact,setStatesObj, statesObj}:{contact:IContact,setStatesObj:Function,statesObj:IStatesObj}){  
 function editHandler(){
     let varForm:IFormData;
     varForm={...statesObj.selectedContact,action:"edit"}
     setStatesObj({...statesObj,formData:varForm,showForm:true,showDisplayDetails:false})
 }
 function deleteHandler(){
-contactServices.DeleteContact(statesObj.selectedContact.id)
+  if ( window.confirm("Are you sure you want to delete " +statesObj.selectedContact.name +"'s details")){
+    contactServices.DeleteContact(statesObj.selectedContact.id)
 setStatesObj({...statesObj,showForm:false,showDisplayDetails:false})
+}
+else
+setStatesObj({...statesObj,showForm:false,showDisplayDetails:true})
 }
         return(            
         <div className="displayDetails">

@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import './App.css';
 import { HeaderComponent } from './Header';
 import { MainSection } from './MainSection';
-import { DisplayMiniDetails } from './SetUp';
-import { IContact } from './Models';
+import { DisplayMiniDetails } from './DisplayMiniDetails';
+import { IContact, IStatesObj } from './Models';
 import { IFormData } from './Models';
 import { ContactServices } from './ContactServices';
 import { IValidates } from './Models';
 let contactServices:ContactServices=new ContactServices();
 
 function App() {
-  const [statesObj, setStatesObj]=useState<{formData:IFormData,showForm:boolean,showDisplayDetails:boolean,selectedContact:IContact,validates:IValidates}>({
+  const [statesObj, setStatesObj]=useState<IStatesObj>({
     formData:{
-      action:"add",
+      action:"",
       id:"",
       name:"",
       email:"",
@@ -27,16 +27,11 @@ function App() {
     mobile:"",
     address:"",
     website:"",
-    landline:""},
-    validates:{
-      isNameValidate:false,
-      isEmailValidate:false,
-      isMobileValidate:false
-    }
+    landline:""}
   });
-  const showForm = ()=>{
-    setStatesObj({...statesObj,showForm:true,showDisplayDetails:false});
-  }
+  // const showForm = ()=>{
+  //   setStatesObj({...statesObj,showForm:true,showDisplayDetails:false});
+  // }
   const displayDetailsState = (id:string)=>{
       setStatesObj({...statesObj,showForm:false,showDisplayDetails:true,selectedContact:contactServices.getContactById(id)});
   }

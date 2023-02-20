@@ -1,6 +1,6 @@
 import React from "react";
 import { IContact } from "./Models";
-import { DisplayMiniDetails } from "./SetUp";
+import { DisplayMiniDetails } from "./DisplayMiniDetails";
 import { contactList } from "./Data";
 export function ContactsSection({displayDetailsState, selectedContact}:{displayDetailsState:Function,selectedContact:IContact}){
     return(<div><h3>Contacts</h3>   

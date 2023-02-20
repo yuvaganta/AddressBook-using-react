@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import "./Header.css"
 import { images } from './images';
-import { IFormData } from './Models';
-export function HeaderComponent({statesObj,setStatesObj}:{statesObj:any,setStatesObj:Function}){
+import { IFormData, IStatesObj } from './Models';
+export function HeaderComponent({statesObj,setStatesObj}:{statesObj:IStatesObj,setStatesObj:Function}){
   function setShowForm() {
     let varForm:IFormData={...statesObj.formData,name:"",id:"",mobile:"",address:"",email:"",website:"",landline:"",action:"add"}
-    setStatesObj({...statesObj,formData:varForm,showForm:true,showDisplayDetails:false});
+    setStatesObj({...statesObj,formData:varForm,showForm:true,showDisplayDetails:false,selectedContact:{...statesObj.selectedContact,id:""}});
   }
 
     return(

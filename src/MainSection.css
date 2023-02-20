@@ -7,7 +7,7 @@
     height: 500px;
   }
   .eachContact{
-    border: 1px groove gray;
+    border: 1px groove rgb(128, 128, 128);
     width: 400px;
     height: 150px;
     margin-left: 10px;
@@ -27,6 +27,9 @@
   .eachContact:hover{
     background-color: rgb(206,231,242);
     cursor: pointer;
+  }
+  .activeContact{
+    background-color: rgb(206,231,242);
   }
   .MainSection{
     display: flex;
